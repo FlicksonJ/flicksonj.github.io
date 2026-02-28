@@ -1,0 +1,305 @@
+/* ==========================================
+   GLOBAL VARIABLES & RESET
+=========================================== */
+:root {
+    --bg-black: #000000;
+    --text-light: #f1f5f9;
+    
+    --neon-start: #39ff14; 
+    --neon-end: #ccff00;   
+    --neon-gradient: linear-gradient(to right, var(--neon-start), var(--neon-end));
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-black);
+    color: var(--text-light);
+    margin: 0;
+    overflow-x: hidden;
+    scroll-behavior: smooth; 
+}
+
+/* ==========================================
+   NAVIGATION BAR
+=========================================== */
+.navbar {
+    padding: 20px 0;
+    transition: all 0.4s ease-in-out;
+    background-color: transparent;
+}
+
+.glass-nav {
+    padding: 10px 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+.nav-link:hover {
+    color: var(--neon-start) !important;
+    text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+}
+
+/* --- Navbar Logo Styling --- */
+.nav-logo {
+    height: 45px; /* Adjust based on your logo's proportions */
+    width: auto;
+    transition: all 0.3s ease;
+    /* Optional: If your logo is white/transparent, this adds a neon glow */
+    filter: drop-shadow(0 0 5px rgba(57, 255, 20, 0.2));
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 10px var(--neon-start));
+}
+
+/* Ensure the toggler icon uses your neon color on mobile */
+.navbar-toggler {
+    border-color: rgba(57, 255, 20, 0.5);
+}
+
+/* ==========================================
+   HERO SECTION & LAYERS
+=========================================== */
+.hero-section {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: var(--bg-black); 
+    overflow: hidden;
+    border-bottom: 4px solid transparent;
+    border-image: var(--neon-gradient) 1;
+}
+
+.hero-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: right 50%;
+    background-size: auto 250%; 
+    background-repeat: no-repeat;
+}
+
+.hero-base-bg {
+    background-image: url('../images/hero-bg.png');
+    z-index: 1;
+}
+
+/* THE NEW EFFECT: A smooth, moody green filter sweep */
+.hero-green-sweep-bg {
+    background-image: url('../images/hero-bg.png');
+    /* Converts the image to a dark neon green tone */
+    filter: sepia(100%) hue-rotate(70deg) saturate(250%) brightness(0.7);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 65%, rgba(0,0,0,0) 100%);
+    -webkit-mask-size: 300% 100%; 
+    -webkit-mask-repeat: no-repeat;
+    animation: greenSweepAnim 32s ease-in-out infinite;
+    z-index: 2;
+}
+
+.hero-subject {
+    background-image: url('../images/hero-cutout.png'); 
+    z-index: 4; /* Pushed up to make room for particles behind it */
+}
+
+.hero-fade-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 45%, rgba(0,0,0,0) 85%);
+    z-index: 5;
+    pointer-events: none; 
+}
+
+/* ==========================================
+   LIGHTWEIGHT PARTICLES
+=========================================== */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 3; /* Sits behind the subject, in front of the background */
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    bottom: -10px; /* Start just below the screen */
+    background-color: var(--neon-start);
+    border-radius: 50%;
+    box-shadow: 0 0 15px var(--neon-start);
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+    to { transform: translateY(-110vh); }
+}
+
+/* ==========================================
+   HERO ANIMATION UTILITIES
+=========================================== */
+.hidden-initially { opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.5s ease-out; }
+.fade-in { opacity: 1; visibility: visible; transform: translateY(0); }
+.smooth-fade-up { opacity: 0; animation: glideUp 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+
+.slide-in-symbol {
+    color: var(--neon-start);
+    margin-right: 15px;
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-40px);
+    animation: slideInRight 0.6s ease-out forwards;
+}
+
+.reveal-name {
+    opacity: 1;
+    visibility: visible;
+    animation: cinematicReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.neon-text-gradient {
+    background: var(--neon-gradient);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShift 3s linear infinite;
+}
+
+.text-white-solid { color: #ffffff !important; background: none; -webkit-text-fill-color: initial; }
+
+/* --- Cinematic Entry Animations --- */
+.hero-base-bg {
+    background-image: url('../images/hero-bg.png');
+    z-index: 1;
+    opacity: 0;
+    animation: layerReveal 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.hero-subject {
+    background-image: url('../images/hero-cutout.png'); 
+    z-index: 4; 
+    opacity: 0;
+    /* 0.3s delay so the background appears a split second before you do */
+    animation: layerReveal 2s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
+}
+
+@keyframes layerReveal {
+    0% { opacity: 0; filter: blur(10px); }
+    100% { opacity: 1; filter: blur(0); }
+}
+
+/* ==========================================
+   LAYOUT STRUCTURES
+=========================================== */
+.terminal-prompt { font-size: calc(1.8rem + 0.5vw); }
+.flickson-block { width: max-content; }
+.typewriter-spacer { height: 45px; width: 100%; position: relative; margin-bottom: 1.5rem; }
+.typewriter-absolute-box { position: absolute; top: 0; left: 0; white-space: nowrap; }
+
+.typewriter {
+    font-family: 'Fira Code', monospace;
+    font-size: calc(1.2rem + 0.5vw);
+    color: #94a3b8;
+    border-right: 3px solid var(--neon-start);
+    padding-right: 8px; 
+    display: inline-block;
+    white-space: nowrap;
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+/* ==========================================
+   BUTTONS & ICONS
+=========================================== */
+.scroll-indicator {
+    color: var(--neon-start);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+    color: #fff;
+    text-shadow: 0 0 15px var(--neon-start);
+}
+
+.neon-icon-bounce { animation: bounceDown 2s infinite; }
+
+/* ==========================================
+   SCANLINES & KEYFRAMES
+=========================================== */
+.biometric-scanline {
+    position: absolute;
+    top: 0;
+    right: -20vw;
+    width: 25vw;
+    height: 100%;
+    background: linear-gradient(to right, rgba(57,255,20,0) 0%, rgba(57,255,20,0.1) 50%, rgba(57,255,20,0) 100%);
+    animation: scanFaceRightToLeft 7s linear infinite;
+    pointer-events: none;
+    z-index: 6; 
+}
+
+@keyframes scanFaceRightToLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-120vw); } }
+@keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--neon-start) } }
+@keyframes slideInRight { to { transform: translateX(0); opacity: 1; } }
+@keyframes glideUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes bounceDown { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+@keyframes gradientShift { 0% { background-position: 0% center; } 50% { background-position: 100% center; } 100% { background-position: 0% center; } }
+@keyframes cinematicReveal { 0% { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(8px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+
+/* The new Green Sweep Animation */
+@keyframes greenSweepAnim {
+    0% { -webkit-mask-position: 150% 0; opacity: 0; }
+    5% { opacity: 1; }
+    45% { -webkit-mask-position: -50% 0; opacity: 1; }
+    50% { opacity: 0; } 
+    100% { opacity: 0; }
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS
+=========================================== */
+
+@media (max-width: 991px) {
+    .hero-section {
+        text-align: center;
+        padding-top: 100px;
+    }
+    
+    .hero-layer {
+        background-position: right center;
+        background-size: cover;
+    }
+    
+    .hero-fade-overlay {
+        background: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8) 60%, rgba(0,0,0,0) 100%);
+    }
+
+    .typewriter-absolute-box {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* THE FIX: Start completely off-screen to the right, sweep fully off-screen to the left */
+    .biometric-scanline {
+        width: 80vw; 
+        right: -80vw; /* Hides the entire width of the beam off-screen before it starts */
+        animation: scanFaceMobile 7s linear infinite;
+    }
+}
+
+/* Dedicated mobile keyframe added right below the media query */
+@keyframes scanFaceMobile { 
+    0% { transform: translateX(0); } 
+    100% { transform: translateX(-180vw); } /* Sweeps the full width of the screen + the beam */
+}
