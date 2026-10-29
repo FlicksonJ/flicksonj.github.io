@@ -177,8 +177,11 @@ body {
 .sidebar-email { color: #94a3b8; text-decoration: none; font-size: 0.95rem; font-family: 'Fira Code', monospace; transition: all 0.3s ease; display: inline-block; }
 .sidebar-email:hover { color: var(--neon-start); text-shadow: 0 0 10px rgba(57, 255, 20, 0.4); }
 
-.social-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(15, 23, 42, 0.6); color: var(--text-light); font-size: 1.2rem; transition: all 0.3s ease; text-decoration: none; border: 1px solid rgba(57, 255, 20, 0.2); }
+.social-links { display: flex; justify-content: center; align-items: center; flex-wrap: nowrap !important; gap: 5px; }
+.social-icon { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: rgba(15, 23, 42, 0.6); color: var(--text-light); font-size: 0.88rem; transition: all 0.3s ease; text-decoration: none; border: 1px solid rgba(57, 255, 20, 0.2); flex-shrink: 0; }
+.social-icon svg { width: 0.88rem; height: 0.88rem; fill: currentColor; display: block; transition: fill 0.3s ease; }
 .social-icon:hover { background: var(--neon-gradient); color: #000; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(57, 255, 20, 0.4); }
+.social-icon:hover svg { fill: #000; }
 
 /* --- Terminal Resume Button --- */
 .btn-resume {
@@ -275,6 +278,12 @@ body {
     .biometric-scanline { width: 80vw; right: -80vw; animation: scanFaceMobile 7s linear infinite; }
     .sticky-sidebar { position: relative; top: 0; border-right: none; }
     .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; font-size: 1rem; }
+}
+
+@media (max-width: 360px) {
+    .social-links { gap: 3px; }
+    .social-icon { width: 26px; height: 26px; font-size: 0.78rem; }
+    .social-icon svg { width: 0.78rem; height: 0.78rem; }
 }
 
 @keyframes scanFaceMobile { 0% { transform: translateX(0); } 100% { transform: translateX(-180vw); } }
